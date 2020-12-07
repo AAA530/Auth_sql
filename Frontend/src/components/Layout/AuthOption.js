@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
 function AuthOption() {

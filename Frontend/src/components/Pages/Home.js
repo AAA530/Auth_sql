@@ -7,18 +7,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import { UserContext } from "../../Context/UserContext";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    maxWidth: 500,
-  },
-});
-
 function Home() {
   const { userData } = useContext(UserContext); //getting Data form UserContext
   const [loading, setLoading] = useState(true);
   const history = useHistory();
-  const classes = useStyles();
 
   //Checking if User is Logged in , if not then send him to login page
   useEffect(() => {
