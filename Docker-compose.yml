@@ -1,0 +1,51 @@
+version: "3"
+services:
+  react-app:
+    image: react-app
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+      - frontend
+  api-server:
+    image: api-server
+    ports:
+      - "5000:5000"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=moeuser
+      - MYSQL_PASSWORD=moepass
+      - MYSQL_DATABASE=moe_db
+    container_name: moe-mysql-app
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    depends_on:
+      - mysql
+    networks:
+      - backend
+    ports:
+      - "30002:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT= 3306
+    volumes:
+      - /sessions
+    container_name: moe-phpmyadmin-app
+networks:
+  mern-app:
+    driver: bridge
+  frontend:
+  backend:
+volumes:
+  mongo-data:
+    driver: local

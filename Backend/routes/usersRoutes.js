@@ -7,9 +7,9 @@ const Router = require("express").Router();
 const Auth = require("./../middleware/auth");
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "mysql",
   user: "root",
-  password: "",
+  password: "root",
 });
 
 db.connect((err) => {
