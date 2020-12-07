@@ -4,7 +4,7 @@ import Header from "./components/Layout/Header";
 import Home from "./components/Pages/Home";
 import Axios from "axios";
 
-import { UserContext, UserProvider } from "./Context/UserContext";
+import { UserContext } from "./Context/UserContext";
 import AuthPath from "./components/Pages/AuthPath";
 
 import "./App.css";
