@@ -106,7 +106,7 @@ export default function Login() {
             margin="normal"
             required
             fullWidth
-            id="username"
+            id="username1"
             label="UserName"
             name="username"
             autoComplete="username"
@@ -121,7 +121,7 @@ export default function Login() {
             name="password"
             label="Password"
             type="password"
-            id="password"
+            id="password1"
             autoComplete="current-password"
             onChange={handleInputChange}
           />

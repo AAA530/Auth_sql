@@ -110,7 +110,7 @@ export default function Register() {
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
+                id="username2"
                 label="UserName"
                 name="username"
                 onChange={handleInputChange}
@@ -124,7 +124,7 @@ export default function Register() {
                 name="password"
                 label="Password"
                 type="password"
-                id="password"
+                id="password1"
                 onChange={handleInputChange}
               />
             </Grid>
@@ -137,7 +137,7 @@ export default function Register() {
                 label="Password Check"
                 type="password"
                 onChange={handleInputChange}
-                id="password"
+                id="password1"
               />
             </Grid>
           </Grid>
