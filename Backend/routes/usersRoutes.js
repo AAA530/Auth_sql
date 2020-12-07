@@ -60,24 +60,28 @@ Router.post("/register", async (req, res) => {
       "SELECT username FROM users WHERE username = ?",
       data.username,
       async (err, res_data) => {
-        if (res_data.length > 0) {
-          return res.status(400).json({ msg: "Account already exists" });
+        if (err) {
+          console.log(err);
         } else {
-          //Encrypting Password to save in database
-          const salt = await bcrypt.genSalt();
-          const PassWordHash = await bcrypt.hash(data.password, salt);
-          console.log(PassWordHash);
+          if (res_data.length > 0) {
+            return res.status(400).json({ msg: "Account already exists" });
+          } else {
+            //Encrypting Password to save in database
+            const salt = await bcrypt.genSalt();
+            const PassWordHash = await bcrypt.hash(data.password, salt);
+            console.log(PassWordHash);
 
-          const newUser = {
-            username: data.username,
-            password: PassWordHash,
-          };
+            const newUser = {
+              username: data.username,
+              password: PassWordHash,
+            };
 
-          // If user is not present insert user in database
-          db.query("INSERT INTO users SET ?", newUser, (err, ndata) => {
-            console.log(ndata);
-            res.json(ndata);
-          });
+            // If user is not present insert user in database
+            db.query("INSERT INTO users SET ?", newUser, (err, ndata) => {
+              console.log(ndata);
+              res.json(ndata);
+            });
+          }
         }
       }
     );
@@ -104,29 +108,36 @@ Router.post("/login", (req, res) => {
       "SELECT * FROM users WHERE username = ?",
       username,
       async (err, user) => {
-        console.log(user);
-        if (user.length > 0) {
-          //checking password hash with bcrypt
-          const isMatch = await bcrypt.compare(password, user[0].password);
-          if (!isMatch) {
-            //if no match return error msg "Check Your Password again"
-            return res.status(400).json({
-              msg: "Check Your Password again",
-            });
-          } else {
-            // Signing a jwt token with id
-            const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET);
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(user);
+          if (user.length > 0) {
+            //checking password hash with bcrypt
+            const isMatch = await bcrypt.compare(password, user[0].password);
+            if (!isMatch) {
+              //if no match return error msg "Check Your Password again"
+              return res.status(400).json({
+                msg: "Check Your Password again",
+              });
+            } else {
+              // Signing a jwt token with id
+              const token = jwt.sign(
+                { id: user[0].id },
+                process.env.JWT_SECRET
+              );
 
-            // return userData to frontend
-            return res.json({
-              token: token,
-              user: user[0],
+              // return userData to frontend
+              return res.json({
+                token: token,
+                user: user[0],
+              });
+            }
+          } else {
+            return res.status(400).json({
+              msg: "No account with this username has been registered.",
             });
           }
-        } else {
-          return res.status(400).json({
-            msg: "No account with this username has been registered.",
-          });
         }
       }
     );
