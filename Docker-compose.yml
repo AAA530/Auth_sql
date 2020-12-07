@@ -1,7 +1,7 @@
 version: "3"
 services:
   react-app:
-    image: react-app
+    build: ./Frontend
     stdin_open: true
     ports:
       - "8000:8000"
@@ -9,7 +9,7 @@ services:
       - mern-app
       - frontend
   node-server:
-    image: node-server
+    build: ./Backend
     ports:
       - "5000:5000"
     networks:
