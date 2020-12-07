@@ -4,12 +4,12 @@ services:
     image: react-app
     stdin_open: true
     ports:
-      - "3000:3000"
+      - "8000:8000"
     networks:
       - mern-app
       - frontend
-  api-server:
-    image: api-server
+  node-server:
+    image: node-server
     ports:
       - "5000:5000"
     networks:
@@ -24,9 +24,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=moeuser
-      - MYSQL_PASSWORD=moepass
-      - MYSQL_DATABASE=moe_db
-    container_name: moe-mysql-app
+    container_name: mysql-db
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:4.7
     depends_on:
@@ -40,7 +38,7 @@ services:
       - PMA_PORT= 3306
     volumes:
       - /sessions
-    container_name: moe-phpmyadmin-app
+    container_name: phpmyadmin-db
 networks:
   mern-app:
     driver: bridge

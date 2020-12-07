@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+
+// importing Material ui components
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
@@ -13,12 +15,12 @@ const useStyles = makeStyles({
 });
 
 function Home() {
-  const { userData } = useContext(UserContext);
+  const { userData } = useContext(UserContext); //getting Data form UserContext
   const [loading, setLoading] = useState(true);
   const history = useHistory();
   const classes = useStyles();
 
-  console.log(userData);
+  //Checking if User is Logged in , if not then send him to login page
   useEffect(() => {
     if (!userData.user) history.push("/");
     setLoading(false);
@@ -27,30 +29,15 @@ function Home() {
   return (
     <>
       {loading ? (
-        <p>hi</p>
+        <p>Loading</p>
       ) : (
         <Grid xs="12">
           <Typography align="center" variant="h4" gutterBottom>
-            Wellcome {userData.user.email}
+            Wellcome {userData.user.username}
           </Typography>
         </Grid>
       )}
     </>
-
-    // {loading
-    //   ? <p>hi</p>
-    //   : <Grid xs="12">
-    //   <Typography align="center" variant="h4" gutterBottom>
-    //     Wellcome {userData.user.email}
-    //   </Typography>
-    // </Grid>
-    // }
-
-    // <Grid xs="12">
-    //   <Typography align="center" variant="h4" gutterBottom>
-    //     Wellcome {userData.user.email}
-    //   </Typography>
-    // </Grid>
   );
 }
 

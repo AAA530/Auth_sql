@@ -1,23 +1,18 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
+// importing Material ui components
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import { UserContext } from "../../Context/UserContext";
 
 export default function AuthPath() {
   const { userData } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   useEffect(() => {
     if (userData.user) history.push("/home");
-    setLoading(false);
   });
   return (
     <>

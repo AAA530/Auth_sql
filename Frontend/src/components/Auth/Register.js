@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+
+// importing Material ui components
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,17 +15,19 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+// SweetAlert is used to show error in Register form
 import SweetAlert from "sweetalert2-react";
 
 import { useHistory } from "react-router-dom";
 
-import { UserContext, UserProvider } from "../../Context/UserContext";
+// importing UserContext to get userData from it
+import { UserContext } from "../../Context/UserContext";
 
 import Axios from "axios";
 
 export default function Register() {
-  const [obj, setObj] = useState({});
-  const [error, setError] = useState(false);
+  const [obj, setObj] = useState({}); // obj will store form data
+  const [error, setError] = useState(false); // To store error coming from node server
 
   const { userData, setUserData } = useContext(UserContext);
 
@@ -42,10 +46,13 @@ export default function Register() {
     try {
       e.preventDefault();
       let newUser = obj;
+
+      // Registering new User by sending post request to backend
       await Axios.post("http://localhost:5000/users/register", newUser);
 
+      //Login User after registering
       const loginres = await Axios.post("http://localhost:5000/users/login", {
-        email: newUser.email,
+        username: newUser.username,
         password: newUser.password,
       });
 
@@ -54,13 +61,14 @@ export default function Register() {
         user: loginres.data.user,
       });
 
+      //Set AUTH Token to localStorage so person does not have to login every time
       localStorage.setItem("auth-token", loginres.data.token);
       history.push("/");
     } catch (err) {
+      // If there is error in form submission it sets error state
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
-  console.log(obj);
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -107,9 +115,9 @@ export default function Register() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
+                id="username"
+                label="UserName"
+                name="username"
                 onChange={handleInputChange}
 
                 // autoComplete="email"
