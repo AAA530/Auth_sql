@@ -8,16 +8,6 @@ services:
     networks:
       - mern-app
       - frontend
-  node-server:
-    build: ./Backend
-    ports:
-      - "5000:5000"
-    networks:
-      - frontend
-      - backend
-    depends_on:
-      - mysql
-      - phpmyadmin
   mysql:
     image: mysql:5.7
     networks:
@@ -40,6 +30,16 @@ services:
     volumes:
       - /sessions
     container_name: phpmyadmin-db
+  node-server:
+    build: ./Backend
+    ports:
+      - "5000:5000"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - mysql
+      - phpmyadmin
 networks:
   mern-app:
     driver: bridge
