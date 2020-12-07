@@ -17,6 +17,7 @@ services:
       - backend
     depends_on:
       - mysql
+      - phpmyadmin
   mysql:
     image: mysql:5.7
     networks:
