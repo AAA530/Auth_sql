@@ -3,25 +3,22 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 
 function AuthOption() {
   const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
 
-  const register = () => history.push("/register");
-  const login = () => history.push("/login");
   const logout = () => {
+    //Setting Data on Context to null
     setUserData({
       token: undefined,
       user: undefined,
     });
+
+    // Removing Auth-token from localStorage
     localStorage.setItem("auth-token", "");
+    // Redirecting to login page
     history.push("/");
   };
 
@@ -48,14 +45,7 @@ function AuthOption() {
           Logout
         </Button>
       ) : (
-        <>
-          {/* <Button color="inherit" onClick={register}>
-            Register
-          </Button>
-          <Button color="inherit" onClick={login}>
-            Login
-          </Button> */}
-        </>
+        <></>
       )}
     </>
   );

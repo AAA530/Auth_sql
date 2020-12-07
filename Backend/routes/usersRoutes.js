@@ -10,7 +10,7 @@ const Auth = require("./../middleware/auth");
 const db = mysql.createConnection({
   host: "mysql",
   user: "root",
-  password: "",
+  password: "root",
 });
 
 // Creating Database Schema if it is not already present
