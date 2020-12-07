@@ -10,7 +10,6 @@ const db = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "auth_node_sql",
 });
 
 db.connect((err) => {
@@ -18,6 +17,19 @@ db.connect((err) => {
     console.log(err);
   } else {
     console.log("connected to mysql");
+    db.query("CREATE DATABASE IF NOT EXISTS auth_node_sql", (err, result) => {
+      if (err) throw err;
+      db.query("USE auth_node_sql", (err, r_d) => {
+        if (err) throw err;
+        db.query(
+          "CREATE TABLE IF NOT EXISTS `users`( `id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(50) NOT NULL , `password` VARCHAR(500) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;",
+          (err, r_d) => {
+            if (err) throw err;
+            console.log(r_d);
+          }
+        );
+      });
+    });
   }
 });
 
